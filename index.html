@@ -34,53 +34,66 @@ text {
     <head>
         <meta charset="utf-8">
         <title>D3 Test</title>
-        <script type="text/javascript" src="d3/d3.js"></script>
+        <script src="//d3js.org/d3.v3.min.js"></script>
         <script src = "tester.js"></script>
     </head>
     <body>
     <script>
 
 
+// initializes the objects 
+
+// the links represent each of clip submission (comparison)logically we represent those as links
 
 var links = b.cameras;
-var newLinks = [];
-var camCount = new Map();
 
+// We used a map to strip down the data to just the distinct nodes that appear. When it comes to the display, we don't want to produce multiple nodes for each camera.
 
-for (var i = 0; i < links.length; i++){
-  var camFacts = links[i];
-  
-  if (!(camCount.has(camFacts["target"]))){
-    var s = new Set();
-    camCount.set(camFacts["target"], s.add(camFacts["source"]));
+// clips refer to a data point in the tester.js file. Every clip refers to a comparison (two products and how they fair: source and target)
+
+function createMap() {
+  connectionMap = new Map()
+  for (var i = 0; i < links.length; i++){
+  var clip = links[i];
+  //goes through all of the clips and adds every new unique camera to 
+  if (!(connectionMap.has(clip["target"]))){
+    var firstSource = new Set();
+    connectionMap.set(clip["target"], firstSource.add(clip["source"]));
     }else{
-      var da = camCount.get(camFacts["target"]);
-      da.add(camFacts["source"]);
-      camCount.set(camCount["target"], da);
+      //if the product is already in the set then we still have to add the source to the list of things its compared to. multiples are taken care of with the set.
+      var updatedValues = connectionMap.get(clip["target"]);
+      updatedValues.add(clip["source"]);
+      connectionMap.set(connectionMap["target"], updatedValues);
  }
-
-  if (!(camCount.has(camFacts["source"]))){
-  var s = new Set();
-  camCount.set(camFacts["source"], s.add(camFacts["target"]));
+  if (!(connectionMap.has(clip["source"]))){
+  var firstTarget = new Set();
+  connectionMap.set(clip["source"], firstTarget.add(clip["target"]));
   }else{  
-    var ca = camCount.get(camFacts["source"]);
-      ca.add(camFacts["target"]);
-      camCount.set(camCount["source"], ca);
- }
+    var updatedValues = connectionMap.get(clip["source"]);
+      updatedValues.add(clip["target"]);
+      connectionMap.set(connectionMap["source"], updatedValues);
 
+  
+ }
   
 }
+return connectionMap
+}
+
+var distinctNodes = createMap()
+console.log(distinctNodes)
 
 
-var stupid = [];
-for (var [key, value] of camCount){
+// labels all of the nodes
+var extra = [];
+for (var [key, value] of distinctNodes){
   if(value.size == 1){
-    stupid.push(key);
+    extra.push(key);
   }
 }
  
 
-stupid.forEach(function(camera){
+extra.forEach(function(camera){
   links.forEach(function(camFacts){
     if (camera == camFacts["target"] || camera == camFacts["source"]){
         camFacts.type = "S";
@@ -96,9 +109,10 @@ links.forEach(function(camFacts){
 
 })
 
+
 var links2 = links.slice();
 var collapse = new Object();
-for (var [key, value] of camCount){
+for (var [key, value] of distinctNodes){
   collapse.name = key;
 }
 
@@ -112,7 +126,7 @@ function isInArray(value, array) {
 var nodes = {};
 
 // Compute the distinct nodes from the links.
-links.forEach(function(link) {
+  links.forEach(function(link) {
   link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
   link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
 });
@@ -136,12 +150,12 @@ var svg = d3.select("body").append("svg")
 
 var link = svg.selectAll(".link")
     .data(force.links())
-  .enter().append("line")
+    .enter().append("line")
     .attr("class", "link");
 
 var node = svg.selectAll(".node")
     .data(force.nodes())
-  .enter().append("g")
+    .enter().append("g")
     .attr("class", "node")
     .on("mouseover", mouseover)
     .on("mouseout", mouseout)
@@ -170,13 +184,18 @@ function tick() {
 function mouseover() {
   d3.select(this).select("circle").transition()
       .duration(750)
-      .attr("r", 16);
+      .attr("r", 20)
+      .attr("fill", "red");
+
 }
 
 function mouseout() {
   d3.select(this).select("circle").transition()
       .duration(750)
-      .attr("r", 8);
+      .attr("r", 8)
+      .attr("fill", "silver");
+  
+
 }
 
 
