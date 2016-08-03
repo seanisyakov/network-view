@@ -66,7 +66,7 @@ table, td {
     border: none;
     border-radius : 8px;
     color: white;
-    padding: 25px 70px;
+    padding: 25px 90px;
     text-align: left;
     text-decoration: none;
     display: inline-block;
@@ -180,7 +180,7 @@ function openNav(map, indexes) {
     
     var y2 = document.createElement("a");
     y2.setAttribute("id", "a2");
-    var t2 = document.createTextNode(iMatrix[0][indexes[2]]);
+    var t2 = document.createTextNode(iMatrix[0][indexes[2]] + " ($" + priceMap.get(iMatrix[0][indexes[2]]) + ")");
     y2.appendChild(t2);
     document.getElementById("innerNav").appendChild(y2);
 
@@ -195,7 +195,7 @@ function openNav(map, indexes) {
 
     var y3 = document.createElement("a");
     y3.setAttribute("id", "a3");
-    var t3 = document.createTextNode("vs " + iMatrix[indexes[1]][0]);
+    var t3 = document.createTextNode("vs " + iMatrix[indexes[1]][0] + " ($" + priceMap.get(iMatrix[indexes[1]][0]) + ")");
     y3.appendChild(t3);
     document.getElementById("innerNav").appendChild(y3);
 
@@ -213,7 +213,9 @@ function writeStuff(window2, map, indexes){
 
     window2.document.writeln("<div>" + iMatrix[0][indexes[2]] + " vs " + iMatrix[indexes[1]][0] + "</div>");
     var t = createText(map);
+    //console.log(t);
     var rt = createText2(map);
+    //console.log(rt);
     var j = 0;
     
     t.forEach(function(ele){
@@ -225,19 +227,139 @@ function writeStuff(window2, map, indexes){
         j++;
     });
 }
-
+var priceMap = makePriceMap();
+var dateMap = makeDateMap();
 var c = addColHeaders(data);
 var r = addRowHeaders(data);
 var iMatrix = setMatrix(c, r);
 var indexMap = createIndexMap(iMatrix);
+
 buildMatrix(iMatrix, data);
 insertCells(iMatrix);
-//console.log(iMatrix);
+
 addPopToCells();
 sortArrays();
 changeArrays(iMatrix);
 
 //console.log(iMatrix);
+
+function makeDateMap(){
+    var releaseDateMap = new Map();
+    releaseDateMap.set("Nikon D3300", 2014);
+    releaseDateMap.set("Canon EOS 70D", 2013);
+    releaseDateMap.set("Sony HX-300", 2013);
+    releaseDateMap.set("Canon EOS Rebel Sl1", 2013);
+    releaseDateMap.set("Canon EOS Rebel T5i", 2013);
+    releaseDateMap.set("Canon EOS Rebel T4i", 2012);
+    releaseDateMap.set("Canon EOS 60D", 2010);
+    releaseDateMap.set("Canon EOS 7D", 2009);
+    releaseDateMap.set("Nikon D90", 2008);
+    releaseDateMap.set("Nikon D7000", 2008);
+    releaseDateMap.set("Nikon D80", 2006);
+    releaseDateMap.set("Canon EOS 6D", 2012);
+    releaseDateMap.set("Nikon D3200", 2012);
+    releaseDateMap.set("Nikon D5200", 2013);
+    releaseDateMap.set("Canon EOS Rebel SL1", 2013);
+    releaseDateMap.set("Canon EOS Rebel T3i", 2011);
+    releaseDateMap.set("Canon SX 40", 2011);
+    releaseDateMap.set("Pentax K30", 2012);
+    releaseDateMap.set("Nikon D5100", 2011);
+    releaseDateMap.set("Nikon D800E", 2012);
+    releaseDateMap.set("Nikon D7100", 2013);
+    releaseDateMap.set("Nikon D3100", 2010);
+    releaseDateMap.set("Nikon D70", 2008);
+    releaseDateMap.set("Canon EOS Rebel T2i", 2010);
+    releaseDateMap.set("Canon EOS 50D", 2008);
+    releaseDateMap.set("Canon EOS 5D Mk III", 2012);
+    releaseDateMap.set("Canon EOS 7D II", 2014);
+    releaseDateMap.set("Canon EOS Rebel T1i", 2009);
+    releaseDateMap.set("Nikon D300", 2007);
+    releaseDateMap.set("Nikon D600", 2012);
+    releaseDateMap.set("Nikon D800", 2012);
+    releaseDateMap.set("Nikon D60", 2008);
+    releaseDateMap.set("Canon EOS D70", 2013);
+    releaseDateMap.set("Canon EOS 80D", 2016);
+    releaseDateMap.set("Sony Alpha a6300", 2016);
+    releaseDateMap.set("Nikon D7200", 2015);
+    releaseDateMap.set("Samsung NX1", 2010);
+    releaseDateMap.set("Canon 5D Mk III", 2012);
+    releaseDateMap.set("Canon EOS 7D Mk II", 2014);
+    releaseDateMap.set("Olympus Evolt E500", 2005);
+    releaseDateMap.set("Canon EOS Rebel XSi", 2008);
+    releaseDateMap.set("Nikon D750", 2014);
+    releaseDateMap.set("Nikon D610", 2013);
+    releaseDateMap.set("Nikon D700", 2008);
+    releaseDateMap.set("Nikon D4", 2012);
+    releaseDateMap.set("Nikon Df", 2013);
+    releaseDateMap.set("Nikon D810", 2014);
+    releaseDateMap.set("Sony a6000", 2014);
+    releaseDateMap.set("Sony Alpha a7II", 2014);
+    releaseDateMap.set("Sony Alpha a7s", 2013);
+    releaseDateMap.set("Nikon D300S", 2009);
+    releaseDateMap.set("Sony Alpha SLT-A99V", 2012);
+    releaseDateMap.set("Canon EOS 40D", 2007);
+    releaseDateMap.set("Nikon D5300", 2013);
+    return releaseDateMap;
+}
+
+function makePriceMap(){
+  var priceMap = new Map();
+  priceMap.set("Nikon D3300", 546.95);
+  priceMap.set("Canon EOS 70D", 999);
+  priceMap.set("Sony HX-300", 300);
+  priceMap.set("Canon EOS Rebel SL1", 400);
+  priceMap.set("Canon EOS Rebel T5i", 500);
+  priceMap.set("Canon EOS Rebel T4i", 480);
+  priceMap.set("Canon EOS 60D", 659);
+  priceMap.set("Canon EOS 7D", 1500);
+  priceMap.set("Nikon D90", 1000);
+  priceMap.set("Nikon D7000", 500);
+  priceMap.set("Nikon D80", 900);
+  priceMap.set("Canon EOS 6D", 1200);
+  priceMap.set("Nikon D3200", 900);
+  priceMap.set("Nikon D5200", 900);
+  priceMap.set("Canon EOS Rebel SL1", 900);
+  priceMap.set("Canon EOS Rebel T3i", 900);
+  priceMap.set("Canon SX 40", 900);
+  priceMap.set("Pentax K30", 900);
+  priceMap.set("Nikon D5100", 650);
+  priceMap.set("Nikon D800E", 1600);
+  priceMap.set("Nikon D7100", 900);
+  priceMap.set("Nikon D3100", 700);
+  priceMap.set("Nikon D70", 2000);
+  priceMap.set("Canon EOS Rebel T2i", 300);
+  priceMap.set("Canon EOS 50D", 1500);
+  priceMap.set("Canon EOS 5D Mk III", 2600);
+  priceMap.set("Canon EOS 7D II", 1800);
+  priceMap.set("Canon EOS Rebel T1i", 200);
+  priceMap.set("Nikon D300", 500);
+  priceMap.set("Nikon D600", 1300);
+  priceMap.set("Nikon D800", 1500);
+  priceMap.set("Nikon D60", 650);
+  priceMap.set("Canon EOS D70", 1000);
+  priceMap.set("Canon EOS 80D", 1200);
+  priceMap.set("Sony Alpha a6300", 1000);
+  priceMap.set("Nikon D7200", 2000);
+  priceMap.set("Samsung NX1", 2250);
+  priceMap.set("Canon 5D Mk III", 2600);
+  priceMap.set("Canon EOS 7D Mk II", 1800);
+  priceMap.set("Olympus Evolt E500", 170);
+  priceMap.set("Canon EOS Rebel XSi", 275);
+  priceMap.set("Nikon D750", 2000);
+  priceMap.set("Nikon D610", 1500);
+  priceMap.set("Nikon D700", 850);
+  priceMap.set("Nikon D4", 2800);
+  priceMap.set("Nikon Df", 3000);
+  priceMap.set("Nikon D810", 3200);
+  priceMap.set("Sony a6000", 550);
+  priceMap.set("Sony Alpha a7II", 1680);
+  priceMap.set("Sony Alpha a7s", 2100);
+  priceMap.set("Nikon D300S", 900);
+  priceMap.set("Sony Alpha SLT-A99V", 2000);
+  priceMap.set("Canon EOS 40D", 1100);
+  priceMap.set("Nikon D5300", 600);
+  return priceMap;
+}
 
 function sortArrays(){
     for (var i = 1; i < iMatrix.length; i++){
@@ -472,7 +594,7 @@ function addColHeaders(obj){
     document.getElementById("myTr").appendChild(x);
     camArray.forEach(function(camera){
         var x = document.createElement("TH");
-        var t = document.createTextNode(camera);
+        var t = document.createTextNode(camera + " (" + dateMap.get(camera) + ")");
         x.appendChild(t);
         document.getElementById("myTr").appendChild(x);
     });
@@ -493,7 +615,7 @@ function addRowHeaders(obj){
 
     for (var j = 1; j < camArray.length + 1; j++){
         var x = document.createElement("TH");
-        var t = document.createTextNode(camArray[j-1]);
+        var t = document.createTextNode(camArray[j-1] + " (" + dateMap.get(camArray[j-1]) + ")");
         x.appendChild(t);
         document.getElementById("myTr" + j).appendChild(x);
 

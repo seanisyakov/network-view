@@ -686,13 +686,13 @@ var data = {
     "target": "Nikon D5300", "dimension": "autofocus", "text": "The thing that sold me on the d7100 over the 3000 and 5000 series Nikons was that the Autofocus was in the camera (not in the lenses)"},
     
     {"source": "Nikon D7100", "somethingThan" : "better than",
-    "target": "Canon EOS D70", "dimension": "autofocus", "text": "The thing that sold me on the d7100 over the 3000 and 5000 series Nikons was that the Autofocus was in the camera (not in the lenses)"},
+    "target": "Canon EOS 70D", "dimension": "autofocus", "text": "The thing that sold me on the d7100 over the 3000 and 5000 series Nikons was that the Autofocus was in the camera (not in the lenses)"},
     
     {"source": "Nikon D7100", "somethingThan" : "better than",
     "target": "Nikon D5300", "dimension": "low-light performance", "text": "I couldn't believe the difference between this camera and the other. The key feature for me was the performance in low light"},
     
     {"source": "Nikon D7100", "somethingThan" : "better than",
-    "target": "Canon EOS D70", "dimension": "low-light performance", "text": "The feature that sold me over the Canon D70 was low light performance"},
+    "target": "Canon EOS 70D", "dimension": "low-light performance", "text": "The feature that sold me over the Canon D70 was low light performance"},
     
     {"source": "Nikon D7100", "somethingThan" : "better than",
     "target": "Nikon D70", "dimension": "sensor", "text": "it was in a sweet spot in price and had 4x the resolution of my D70 and about 2.5x that of my D80 making it a significant upgrade"},
